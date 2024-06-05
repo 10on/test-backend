@@ -6,6 +6,7 @@ services:
     container_name: php-app
     volumes:
       - ./app:/var/www/html
+      - ./vendor:/var/www/vendor
     networks:
       - app-network
 
@@ -32,6 +33,9 @@ services:
       MYSQL_PASSWORD: user_password
     volumes:
       - db-data:/var/lib/mysql
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
     networks:
       - app-network
 
