@@ -11,5 +11,7 @@
             "email": "igoo10on@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "psr/log": "^3.0"
+    }
 }
