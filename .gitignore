@@ -1,0 +1,38 @@
+# Директории и файлы, созданные IDE и редакторами
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Системные файлы и папки
+.DS_Store
+Thumbs.db
+
+# Лог файлы и временные файлы
+*.log
+*.tmp
+*.swp
+*.bak
+*.orig
+
+# Директории кеша
+cache/
+tmp/
+logs/
+
+# Composer зависимости
+/vendor/
+
+/node_modules/
+
+# Среды Docker
+docker-compose.override.yml
+.env
+
+# PHPUnit файлы
+phpunit.xml
+phpunit.xml.dist
+
+# Файлы и директории, создаваемые инструментами
+/build/
+/coverage/
