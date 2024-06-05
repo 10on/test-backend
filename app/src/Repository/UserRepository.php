@@ -14,7 +14,6 @@ class UserRepository
 
     private string $tableName;
 
-    // Внедрение зависимости через конструктор
     public function __construct(DatabaseInterface $db, string $tableName = 'users')
     {
         $this->db = $db;
