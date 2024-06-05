@@ -8,21 +8,25 @@ use App\Repository\UserRepositoryInterface;
 class UserService implements UserServiceInterface
 {
     private UserRepositoryInterface $userRepository;
+    private UserValidationServiceInterface $userValidationService;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, UserValidationServiceInterface $userValidationService)
     {
         $this->userRepository = $userRepository;
+        $this->userValidationService = $userValidationService;
     }
 
     public function createUser(User $user): bool
     {
         //TODO: Set by database for more accuracy, if possible
         $user->setCreated(new \DateTime());
+        $this->userValidationService->validate($user);
         return $this->userRepository->save($user);
     }
 
     public function updateUser(User $user): bool
     {
+        $this->userValidationService->validate($user);
         return $this->userRepository->update($user);
     }
 

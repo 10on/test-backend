@@ -1,19 +1,23 @@
 <?php declare(strict_types=1);
 
+use App\Service\UserServiceInterface;
 use PHPUnit\Framework\TestCase;
 use App\Entity\User;
 use App\Service\UserService;
 use App\Repository\UserRepositoryInterface;
+use App\Service\UserValidationServiceInterface;
 
 class UserServiceTest extends TestCase
 {
-    private $userRepository;
-    private $userService;
+    private UserRepositoryInterface $userRepository;
+    private UserServiceInterface $userService;
+    private UserValidationServiceInterface $userValidationService;
 
     protected function setUp(): void
     {
         $this->userRepository = $this->createMock(UserRepositoryInterface::class);
-        $this->userService = new UserService($this->userRepository);
+        $this->userValidationService = $this->createMock(UserValidationServiceInterface::class);
+        $this->userService = new UserService($this->userRepository, $this->userValidationService);
     }
 
     public function testCreateUserSuccessfully(): void

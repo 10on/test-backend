@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\DataBase\DatabaseInterface;
 use App\Entity\User;
 use App\Exception\UserException;
-use App\Validator\UserValidator;
-
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -22,36 +20,24 @@ class UserRepository implements UserRepositoryInterface
 
     public function save(User $user): bool
     {
-        if ($this->validateUser($user)) {
-            $this->db::insert($this->tableName, [
-                'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'created' => $user->getCreated(),
-                'deleted' => $user->getDeleted(),
-                'notes' => $user->getNotes()
-            ]);
-
-            return true;
-        }
-
-        return false;
+        return (bool)$this->db::insert($this->tableName, [
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'created' => $user->getCreated(),
+            'deleted' => $user->getDeleted(),
+            'notes' => $user->getNotes()
+        ]);
     }
 
     public function update(User $user): bool
     {
-        if ($this->validateUser($user)) {
-            $this->db::update($this->tableName, [
-                'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'created' => $user->getCreated(),
-                'deleted' => $user->getDeleted(),
-                'notes' => $user->getNotes()
-            ], ['id' => $user->getId()]);
-
-            return true;
-        }
-
-        return false;
+        return (bool)$this->db::update($this->tableName, [
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'created' => $user->getCreated(),
+            'deleted' => $user->getDeleted(),
+            'notes' => $user->getNotes()
+        ], ['id' => $user->getId()]);
     }
 
     public function findById(int $id): ?User
@@ -95,21 +81,5 @@ class UserRepository implements UserRepositoryInterface
         if ($this->findByEmail($email)) {
             throw new UserException('User with this email already exists');
         }
-    }
-
-    private function validateUser(User $user): bool
-    {
-        try {
-            UserValidator::validateName($user->getName());
-            UserValidator::validateEmail($user->getEmail());
-            UserValidator::validateDeletedDate($user->getCreated(), $user->getDeleted());
-            $this->checkIsNameUniq($user->getName());
-            $this->checkIsEmailUniq($user->getEmail());
-        } catch (UserException $exception) {
-            //TODO Implement logging or custom handling if need
-            return false;
-        }
-
-        return true;
     }
 }
