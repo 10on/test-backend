@@ -3,13 +3,13 @@
 namespace App\Service;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Repository\UserRepositoryInterface;
 
 class UserService implements UserServiceInterface
 {
-    private UserRepository $userRepository;
+    private UserRepositoryInterface $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }

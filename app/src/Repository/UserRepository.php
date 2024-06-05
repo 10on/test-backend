@@ -8,7 +8,7 @@ use App\Exception\UserException;
 use App\Validator\UserValidator;
 
 
-class UserRepository
+class UserRepository implements UserRepositoryInterface
 {
     private DatabaseInterface $db;
 
@@ -85,7 +85,7 @@ class UserRepository
     {
         // Possible checking with using MYSQL "EXISTS" operator
         if ($this->findByName($name)) {
-            throw new UserException('Name already exists');
+            throw new UserException('User with this name already exists');
         }
     }
 
@@ -93,7 +93,7 @@ class UserRepository
     {
         // Possible checking with using MYSQL "EXISTS" operator
         if ($this->findByEmail($email)) {
-            throw new UserException('Email already used');
+            throw new UserException('User with this email already exists');
         }
     }
 
